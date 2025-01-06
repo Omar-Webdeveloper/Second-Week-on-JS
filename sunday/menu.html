@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            background-color: brown;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+        .menu-icon {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .div1 {
+            width: 35px;
+            height: 5px;
+            background-color: white;
+            margin: 6px 0;
+        }
+        .vertical.main {
+            display: none;
+        }
+        .vertical li {
+            padding: 10px;
+            text-align: center;
+            background-color: white;
+            color: brown;
+            border-bottom: 1px solid #ddd;
+        }
+        .vertical li:hover {
+            background-color: #f1f1f1;
+        }
+        .new {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <p>LOGO</p>
+        <div class="menu-icon" onclick="myfunction()">
+            <div class="div1"></div>
+            <div class="div1"></div>
+            <div class="div1"></div>
+        </div>
+    </div>
+    <ul id="menu" class="vertical main" style="list-style-type:none; padding: 0;">
+        <li>Homepage</li>
+        <li>Services</li>
+        <li>About</li>
+        <li>Contact</li>
+    </ul>
+
+    <script>
+        let menu = document.querySelector('#menu');
+        menu.className += ' new';
+        console.log(menu.className);
+        function myfunction() {
+            var x = document.getElementById("menu");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
