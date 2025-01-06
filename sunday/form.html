@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Example with Image</title>
 </head>
 <body>
     <form id="myForm">
@@ -40,45 +40,86 @@
         <input type="submit" value="Submit" />
     </form>
     <div id="displayData"></div>
+
     <script>
         function saveFormData(event) {
             event.preventDefault();
-            const formData = {
-                name: document.getElementById("name").value,
-                age: document.getElementById("Age").value,
-                gender: document.getElementById("Gender").value,
-                birthdate: document.getElementById("birthdate").value,
-                description: document.getElementById("description").value,
-                majorUniversity: document.getElementById("Major_university").value,
-                html: document.getElementById("html").checked,
-                css: document.getElementById("css").checked,
-                javascript: document.getElementById("javascript").checked,
-                siblingNumber: document.getElementById("sibling_number").value,
-                descriptionOfSibling: document.getElementById("description_of_sibling").value
+
+            // Individual variables for each input
+            let name = document.getElementById("name").value;
+            let age = document.getElementById("Age").value;
+            let gender = document.getElementById("Gender").value;
+            let birthdate = document.getElementById("birthdate").value;
+            let description = document.getElementById("description").value;
+            let majorUniversity = document.getElementById("Major_university").value;
+            let html = document.getElementById("html").checked;
+            let css = document.getElementById("css").checked;
+            let javascript = document.getElementById("javascript").checked;
+            let siblingNumber = document.getElementById("sibling_number").value;
+            let descriptionOfSibling = document.getElementById("description_of_sibling").value;
+
+            // Convert image to Base64 and save
+            let imageFile = document.getElementById("image").files[0];
+            let reader = new FileReader();
+            reader.onloadend = function() {
+                let imageBase64 = reader.result;
+
+                // Save each variable to local storage
+                localStorage.setItem("name", name);
+                localStorage.setItem("age", age);
+                localStorage.setItem("gender", gender);
+                localStorage.setItem("birthdate", birthdate);
+                localStorage.setItem("description", description);
+                localStorage.setItem("majorUniversity", majorUniversity);
+                localStorage.setItem("html", html);
+                localStorage.setItem("css", css);
+                localStorage.setItem("javascript", javascript);
+                localStorage.setItem("siblingNumber", siblingNumber);
+                localStorage.setItem("descriptionOfSibling", descriptionOfSibling);
+                localStorage.setItem("imageBase64", imageBase64);
+
+                // Display the saved data
+                displayFormData();
             };
-            localStorage.setItem("formData", JSON.stringify(formData));
-            displayFormData();
+            if (imageFile) {
+                reader.readAsDataURL(imageFile);
+            } else {
+                // If no image is selected, proceed without it
+                displayFormData();
+            }
         }
 
         function displayFormData() {
-            const storedData = localStorage.getItem("formData");
-            if (storedData) {
-                const formData = JSON.parse(storedData);
-                document.getElementById("displayData").innerHTML = `
-                    <h3>Form Data:</h3>
-                    <p>Name: ${formData.name}</p>
-                    <p>Age: ${formData.age}</p>
-                    <p>Gender: ${formData.gender}</p>
-                    <p>Birthdate: ${formData.birthdate}</p>
-                    <p>Description: ${formData.description}</p>
-                    <p>Major & University: ${formData.majorUniversity}</p>
-                    <p>HTML: ${formData.html}</p>
-                    <p>CSS: ${formData.css}</p>
-                    <p>JavaScript: ${formData.javascript}</p>
-                    <p>Sibling Number: ${formData.siblingNumber}</p>
-                    <p>Description of Sibling: ${formData.descriptionOfSibling}</p>
-                `;
-            }
+            // Retrieve each variable from local storage
+            let name = localStorage.getItem("name");
+            let age = localStorage.getItem("age");
+            let gender = localStorage.getItem("gender");
+            let birthdate = localStorage.getItem("birthdate");
+            let description = localStorage.getItem("description");
+            let majorUniversity = localStorage.getItem("majorUniversity");
+            let html = localStorage.getItem("html") === "true";
+            let css = localStorage.getItem("css") === "true";
+            let javascript = localStorage.getItem("javascript") === "true";
+            let siblingNumber = localStorage.getItem("siblingNumber");
+            let descriptionOfSibling = localStorage.getItem("descriptionOfSibling");
+            let imageBase64 = localStorage.getItem("imageBase64");
+
+            // Display the retrieved data
+            document.getElementById("displayData").innerHTML = `
+                <h3>Form Data:</h3>
+                <p>Name: ${name}</p>
+                <p>Age: ${age}</p>
+                <p>Gender: ${gender}</p>
+                <p>Birthdate: ${birthdate}</p>
+                <p>Description: ${description}</p>
+                <p>Major & University: ${majorUniversity}</p>
+                <p>HTML: ${html}</p>
+                <p>CSS: ${css}</p>
+                <p>JavaScript: ${javascript}</p>
+                <p>Sibling Number: ${siblingNumber}</p>
+                <p>Description of Sibling: ${descriptionOfSibling}</p>
+                ${imageBase64 ? `<img src="${imageBase64}" alt="Uploaded Image" style="max-width: 200px;">` : ''}
+            `;
         }
 
         document.getElementById("myForm").addEventListener("submit", saveFormData);
