@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form >
+        <label for="flag" >Choose your country flag:</label>
+        <select id="flag" name="flag" onchange="my_country()">
+          <option value="Jordan">Jordan</option>
+          <option value="Iraq">Iraq</option>
+          <option value="Germany">Germany</option>
+          <option value="South Africa">South Africa</option>
+        </select>
+      </form>
+      <img id="flagImage" src="" alt="" width="300px" height="300px">
+      <script>
+        function my_country(){
+            var tag1 = document.getElementById("flag").value;
+            var img = document.getElementById("flagImage"); 
+            switch(tag1) {
+                 case "Jordan": 
+                 img.src = "download (5).jpg"; 
+                 img.alt = "Jordan Flag"; 
+                 break; 
+
+                 case "Iraq": 
+                 img.src = "flag-Iraq-2008.webp"; 
+                 img.alt = "Iraq Flag"; 
+                 break; 
+                 
+                 case "Germany": 
+                 img.src = "germany.png"; 
+                 img.alt = "Germany Flag"; 
+                 break;
+
+                 case "South Africa": 
+                 img.src = "za.png"; 
+                 img.alt = "South Africa Flag"; break; 
+                 
+                 default: img.src = ""; img.alt = "nothing is here"; 
+                }
+        }
+      </script>
+</body>
+</html>
