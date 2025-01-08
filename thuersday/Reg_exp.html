@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Check Regular Expression</title>
+    <style>
+        .valid {
+            border: 2px solid green;
+        }
+        .invalid {
+            border: 2px solid red;
+        }
+        .hint, .error {
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .hint {
+            color: gray;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <form id="my_form">
+        <label for="fname">Enter a First name:</label><br><br>
+        <input type="text" id="fname" name="fname"><span class="hint"> (e.g., John)</span><span class="error" id="fnameError"></span><br><br>
+        
+        <label for="lname">Enter a Last name:</label><br><br>
+        <input type="text" id="lname" name="lname"><span class="hint"> (e.g., Doe)</span><span class="error" id="lnameError"></span><br><br><br>
+
+        <label for="birthdate">Enter a Bdate:</label><br><br>
+        <input type="text" id="birthdate" name="birthdate" placeholder="DDMMYYYY"><span class="hint"> (e.g., 15062021)</span><span class="error" id="birthdateError"></span><br><br><br>
+        
+        <label for="my_email">Enter a Email:</label><br><br>
+        <input type="text" id="my_email" name="my_email"><span class="hint"> (e.g., john.doe@example.com)</span><span class="error" id="emailError"></span><br><br>
+        
+        <label for="again_my_email">Enter a Confirm Email:</label><br><br>
+        <input type="text" id="again_my_email" name="again_my_email"><span class="hint"> (e.g., john.doe@example.com)</span><span class="error" id="confirmEmailError"></span><br><br><br>
+
+        <label for="password">Enter a Password:</label><br><br>
+        <input type="text" id="password" name="password"><span class="hint"> (8-16 characters)</span><span class="error" id="passwordError"></span><br><br>
+        
+        <label for="again_password">Enter a Confirm Password:</label><br><br>
+        <input type="text" id="again_password" name="again_password"><span class="hint"> (8-16 characters)</span><span class="error" id="confirmPasswordError"></span><br><br><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        document.getElementById("my_form").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            let F_name = document.getElementById("fname").value;
+            let l_name = document.getElementById("lname").value;
+
+            let Date_of_birth = document.getElementById("birthdate").value;
+
+            let gmail = document.getElementById("my_email").value;
+            let check_gmail = document.getElementById("again_my_email").value;
+
+            let secret = document.getElementById("password").value;
+            let check_secret = document.getElementById("again_password").value;
+
+            let F_nameRegex = /^[A-Za-z]{1,10}$/;
+            let l_nameRegex = /^[A-Za-z]{1,20}$/;
+
+            let Date_of_birthRegex = /^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[0-2])\d{4}$/;
+
+            let gmailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            let secretRegex = /^[A-Za-z0-9]{8,16}$/;
+
+            clearErrors();
+
+            let isValid = true;
+
+            if (!F_nameRegex.test(F_name)) {
+                showError('fnameError', 'Unexpected first name!');
+                isValid = false;
+            }
+            if (!l_nameRegex.test(l_name)) {
+                showError('lnameError', 'Unexpected last name!');
+                isValid = false;
+            }
+
+            if (!Date_of_birthRegex.test(Date_of_birth)) {
+                showError('birthdateError', 'Typing is wrong!');
+                isValid = false;
+            }
+
+            if (!gmailRegex.test(gmail) && !gmailRegex.test(check_gmail) && gmail == check_gmail) {
+                showError('emailError', 'Invalid email address!');
+                isValid = false;
+            }
+            if (gmail !== check_gmail) {
+                showError('confirmEmailError', 'Emails do not match!');
+                isValid = false;
+            }
+
+            if (!secretRegex.test(secret) && !secretRegex.test(check_secret) && secret == check_secret){
+                showError('passwordError', 'Invalid password!');
+                isValid = false;
+            }
+            if (secret !== check_secret) {
+                showError('confirmPasswordError', 'Passwords do not match!');
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert("Form submitted successfully!");
+            }
+        });
+
+        function validateField(field, regex, errorFieldId, errorMessage) {
+            if (regex.test(field.value)) {
+                field.classList.remove('invalid');
+                field.classList.add('valid');
+                document.getElementById(errorFieldId).textContent = '';
+            } else {
+                field.classList.remove('valid');
+                field.classList.add('invalid');
+                document.getElementById(errorFieldId).textContent = errorMessage;
+            }
+        }
+
+        function clearErrors() {
+            const errorFields = document.querySelectorAll('.error');
+            errorFields.forEach(field => field.textContent = '');
+        }
+
+        function showError(fieldId, message) {
+            document.getElementById(fieldId).textContent = message;
+        }
+
+        document.getElementById('fname').addEventListener('input', function () {
+            validateField(this, /^[A-Za-z]{1,10}$/, 'fnameError', 'Unexpected first name!');
+        });
+
+        document.getElementById('lname').addEventListener('input', function () {
+            validateField(this, /^[A-Za-z]{1,20}$/, 'lnameError', 'Unexpected last name!');
+        });
+
+        document.getElementById('birthdate').addEventListener('input', function () {
+            validateField(this, /^(0[1-9]|[12][0-9]|3[01])(0[1-9]|1[0-2])\d{4}$/, 'birthdateError', 'Typing is wrong!');
+        });
+
+        document.getElementById('my_email').addEventListener('input', function () {
+            validateField(this, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'emailError', 'Invalid email address!');
+        });
+
+        document.getElementById('again_my_email').addEventListener('input', function () {
+            validateField(this, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'confirmEmailError', 'Invalid email address!');
+        });
+
+        document.getElementById('password').addEventListener('input', function () {
+            validateField(this, /^[A-Za-z0-9]{8,16}$/, 'passwordError', 'Invalid password!');
+        });
+
+        document.getElementById('again_password').addEventListener('input', function () {
+            validateField(this, /^[A-Za-z0-9]{8,16}$/, 'confirmPasswordError', 'Invalid password!');
+        });
+    </script>
+</body>
+</html>
