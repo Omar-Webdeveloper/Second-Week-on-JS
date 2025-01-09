@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Cards</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            width: 200px;
+        }
+        .card h3 {
+            margin: 0;
+            margin-bottom: 10px;
+        }
+        .card p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Employee Cards</h1>
+    <div class="container" id="jsonCards"></div>
+    <div class="container" id="apiCards"></div>
+
+    <script>
+        function createCard(employee) {
+            return `
+                <div class="card">
+                    <h3>${employee.name[0]}</h3>
+                    <p><strong>Age:</strong> ${employee.age[0]}</p>
+                    <p><strong>Email:</strong> ${employee.email[0]}</p>
+                    <p><strong>Profession:</strong> ${employee.profession[0]}</p>
+                </div>
+            `;
+        }
+
+        // Fetch and display cards for JSON file data
+        const jsonCardsContainer = document.getElementById('jsonCards');
+        fetch('employees.json')
+            .then(response => response.json())
+            .then(data => {
+                data.employees.forEach(employee => {
+                    jsonCardsContainer.innerHTML += createCard(employee);
+                });
+            })
+            .catch(error => console.error('Error fetching JSON file data:', error));
+
+        // Fetch and display cards for API data
+        const apiCardsContainer = document.getElementById('apiCards');
+        fetch('https://api.npoint.io/fc90d25f59dfd3caac3d')
+            .then(response => response.json())
+            .then(data => {
+                data.employees.forEach(employee => {
+                    apiCardsContainer.innerHTML += createCard(employee);
+                });
+            })
+            .catch(error => console.error('Error fetching API data:', error));
+    </script>
+</body>
+</html>

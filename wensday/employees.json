@@ -1,0 +1,34 @@
+{
+    "employees": [
+      {
+        "name": ["Alice Johnson"],
+        "age": [28],
+        "email": ["alice.johnson@example.com"],
+        "profession": ["Software Engineer"]
+      },
+      {
+        "name": ["Bob Smith"],
+        "age": [35],
+        "email": ["bob.smith@example.com"],
+        "profession": ["Project Manager"]
+      },
+      {
+        "name": ["Catherine Lee"],
+        "age": [42],
+        "email": ["catherine.lee@example.com"],
+        "profession": ["Data Scientist"]
+      },
+      {
+        "name": ["David Brown"],
+        "age": [30],
+        "email": ["david.brown@example.com"],
+        "profession": ["Graphic Designer"]
+      },
+      {
+        "name": ["Evelyn Davis"],
+        "age": [26],
+        "email": ["evelyn.davis@example.com"],
+        "profession": ["Marketing Specialist"]
+      }
+    ]
+  }
